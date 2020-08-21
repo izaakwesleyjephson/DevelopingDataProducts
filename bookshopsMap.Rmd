@@ -13,9 +13,7 @@ library(leaflet)
 library(tidyverse)
 ```
 
-## R Markdown
-
-```{r, echo = FALSE}
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
 bookshops_data <- readRDS("tidyBookshops.rds")
 
 bookshops_markers <- 
@@ -26,7 +24,6 @@ bookshops_markers <-
         mutate(popup = name, 
                lat = geometry.location.lat, 
                lng = geometry.location.lng)
-
 
 bookshopMap <- 
         bookshops_markers %>% 
