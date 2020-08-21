@@ -1,0 +1,35 @@
+---
+title: "Leicester Square Bookshops"
+author: "Izaak Jephson"
+date: "21/08/2020"
+output: html_document
+---
+
+This is a map showing bookshops near Leicester Square in central London
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(leaflet)
+library(tidyverse)
+```
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+bookshops_data <- readRDS("tidyBookshops.rds")
+
+bookshops_markers <- 
+        bookshops_data %>% 
+        select(c(name, 
+                 geometry.location.lat, 
+                 geometry.location.lng)) %>% 
+        mutate(popup = name, 
+               lat = geometry.location.lat, 
+               lng = geometry.location.lng)
+
+bookshopMap <- 
+        bookshops_markers %>% 
+        leaflet() %>% 
+        addTiles() %>% 
+        addMarkers(clusterOptions = markerClusterOptions(), popup = bookshops_markers$popup)
+bookshopMap
+```
+
